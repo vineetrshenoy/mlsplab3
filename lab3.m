@@ -1,4 +1,4 @@
-
+%{
 clear,clc
 
 training = load_training_data('orl_faces/Train');
@@ -65,24 +65,17 @@ reconstruction(img, U, 250, 10)
 reconstruction(img, U, 360, 10)
 
 %}
-%{
-test = load_testing_data('/home/vshenoy/jhu/mlsp/Lab_3/orl_faces/Test');
-[h_test, w_test] = size(test) 
 
-basis_10 = U(:, 1:10);
-sub_10 = basis_10 * basis_10';
+test = load_testing_data('orl_faces/Test');
+[h_test, w_test] = size(test); 
+
+%classes_10 = classify_faces(10, U, training, test)
+%classes_20 = classify_faces(20, U, training, test)
+%classes_30 = classify_faces(30, U, training, test)
+%classes_40 = classify_faces(40, U, training, test)
 
 
-basis_20 = U(:, 1:20);
-sub_20 = basis_20 * basis_20';
-
-basis_30 = U(:, 1:30);
-sub_30 = basis_30 * basis_30';
-
-basis_40 = U(:, 1:40);
-sub_40 = basis_40 * basis_40';
-
-for i=1:w_test
-    projection(test(:, i), sub_10, training)
-end
-%}
+[class_s1, closest] = classify_s1(10, U, training, test);
+[class_s2, closest] = classify_s1(20, U, training, test);
+[class_s3, closest] = classify_s1(30, U, training, test);
+[class_s4, closest] = classify_s1(40, U, training, test);
