@@ -8,10 +8,10 @@ imwrite(uint8(reshape(training(:, 10), [112, 92])),'training_sample.jpg')
 average = mean(training, 2);
 
 [X, Y] = meshgrid(ones(w, 1), average);
-centered_data = training - average;
+centered_data = training - Y;
 imwrite(uint8(reshape(centered_data(:, 10), [112, 92])), 'centered_sample.jpg')
 
-correlation_mat = centered_data * centered_data';
+%correlation_mat = centered_data * centered_data';
 %[V, D] = eig(correlation_mat);
 [U, S, V] = svd(centered_data);                      
 eigenvalues = diag(S.^2);
@@ -55,10 +55,13 @@ saveas(fig2, 'eigenfaces.jpg')
 imgname = 'orl_faces/Train/s1/1.pgm';
 img = imread(imgname);
 
-%reconstruction(img, U, 10, 6)
-%reconstruction(img, U, 20, 7)
-%reconstruction(img, U, 30, 8)
-%reconstruction(img, U, 40, 9)
+reconstruction(img, U, 10, 6)
+reconstruction(img, U, 20, 7)
+reconstruction(img, U, 30, 8)
+reconstruction(img, U, 40, 9)
+reconstruction(img, U, 100, 10)
+reconstruction(img, U, 150, 10)
+reconstruction(img, U, 250, 10)
 reconstruction(img, U, 360, 10)
 
 %}

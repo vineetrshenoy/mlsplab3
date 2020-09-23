@@ -23,11 +23,15 @@ function [] = reconstruction(image, eigenvectors, k, fignum, average)
 
 
     subplot(1, 3, 3)
-    difference = double(image) - double(approx_img);
+   
+    difference = double(image) - 255*double(approx_img);
     imshow(difference, [])
     title('Difference')
 
     filename = strcat('reconstruction_k_', int2str(k), '.png');
+    
+    subplot_title = strcat('Number of eigenvectors: ', int2str(k));
+    sgtitle(subplot_title);
     saveas(fig, filename)
 
 
