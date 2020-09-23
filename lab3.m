@@ -1,67 +1,65 @@
 
 clear,clc
 
-training = load_training_data('/home/vshenoy/jhu/mlsp/Lab_3/orl_faces/Train');
-imshow(reshape(training(:, 10), [112, 92]), [])
+training = load_training_data('orl_faces/Train');
+imwrite(uint8(reshape(training(:, 10), [112, 92])),'training_sample.jpg')
 
 [h, w] = size(training);
 average = mean(training, 2);
 
 [X, Y] = meshgrid(ones(w, 1), average);
 centered_data = training - average;
-imshow(reshape(centered_data(:, 10), [112, 92]), [])
+imwrite(uint8(reshape(centered_data(:, 10), [112, 92])), 'centered_sample.jpg')
 
 correlation_mat = centered_data * centered_data';
-%[V, D] = eig(correlation_mat)
+%[V, D] = eig(correlation_mat);
 [U, S, V] = svd(centered_data);                      
 eigenvalues = diag(S.^2);
 
 
-
 %Plotting the eigen values
-figure(1)
-hold on;
+fig1 = figure(1);
 plot(1:360, eigenvalues)
 title('Eigenvalues')
-hold off;
+
+saveas(gcf, 'eigenvalues.png')
 
 %First eigenface
-figure(2)
+fig2 =figure(2);
 subplot(1, 4, 1)
 hold on;
 imshow(reshape(U(:, 1), [112, 92]), [])
 title('First Eigenface')
-hold off;
+
 
 %Second eigenface
 subplot(1, 4, 2)
-hold on;
 imshow(reshape(U(:, 2), [112, 92]), [])
 title('Second Eigenface')
-hold off;
+
 
 %Third eigenface
 subplot(1, 4, 3)
-hold on;
 imshow(reshape(U(:, 3), [112, 92]), [])
 title('Third Eigenface')
-hold off;
+
 
 %Last eigenface
 subplot(1, 4, 4)
-hold on;
 imshow(reshape(U(:, 360), [112, 92]), [])
 title('Last Eigenface')
 hold off;
 
+saveas(fig2, 'eigenfaces.jpg')
 
-imgname = '/home/vshenoy/jhu/mlsp/Lab_3/orl_faces/Train/s14/1.pgm'
+imgname = 'orl_faces/Train/s1/1.pgm';
 img = imread(imgname);
 
-reconstruction(img, U, 10, 6)
-reconstruction(img, U, 20, 7)
-reconstruction(img, U, 30, 8)
-reconstruction(img, U, 40, 9)
+%reconstruction(img, U, 10, 6)
+%reconstruction(img, U, 20, 7)
+%reconstruction(img, U, 30, 8)
+%reconstruction(img, U, 40, 9)
+reconstruction(img, U, 360, 10)
 
 %}
 %{

@@ -8,7 +8,7 @@ function [] = reconstruction(image, eigenvectors, k, fignum, average)
     approx = basis * weights;
     
 
-    figure(fignum)
+    fig = figure(fignum);
     hold on;
 
     subplot(1, 3, 1)
@@ -23,8 +23,12 @@ function [] = reconstruction(image, eigenvectors, k, fignum, average)
 
 
     subplot(1, 3, 3)
-    imshow(double(image) - double(approx_img), [])
+    difference = double(image) - double(approx_img);
+    imshow(difference, [])
     title('Difference')
+
+    filename = strcat('reconstruction_k_', int2str(k), '.png');
+    saveas(fig, filename)
 
 
 end
