@@ -1,15 +1,15 @@
-%{
+
 clear,clc
 
 training = load_training_data('orl_faces/Train');
-imwrite(uint8(reshape(training(:, 10), [112, 92])),'training_sample.jpg')
+imwrite(uint8(reshape(training(:, 10), [112, 92])),'training_sample.png')
 
 [h, w] = size(training);
 average = mean(training, 2);
 
 [X, Y] = meshgrid(ones(w, 1), average);
 centered_data = training - Y;
-imwrite(uint8(reshape(centered_data(:, 10), [112, 92])), 'centered_sample.jpg')
+imwrite(uint8(reshape(centered_data(:, 10), [112, 92])), 'centered_sample.png')
 
 %correlation_mat = centered_data * centered_data';
 %[V, D] = eig(correlation_mat);
@@ -50,7 +50,7 @@ imshow(reshape(U(:, 360), [112, 92]), [])
 title('Last Eigenface')
 hold off;
 
-saveas(fig2, 'eigenfaces.jpg')
+saveas(fig2, 'eigenfaces.png')
 
 imgname = 'orl_faces/Train/s1/1.pgm';
 img = imread(imgname);
@@ -64,15 +64,15 @@ reconstruction(img, U, 150, 10)
 reconstruction(img, U, 250, 10)
 reconstruction(img, U, 360, 10)
 
-%}
+
 
 test = load_testing_data('orl_faces/Test');
 [h_test, w_test] = size(test); 
 
-%classes_10 = classify_faces(10, U, training, test)
-%classes_20 = classify_faces(20, U, training, test)
-%classes_30 = classify_faces(30, U, training, test)
-%classes_40 = classify_faces(40, U, training, test)
+classes_10 = classify_faces(10, U, training, test)
+classes_20 = classify_faces(20, U, training, test)
+classes_30 = classify_faces(30, U, training, test)
+classes_40 = classify_faces(40, U, training, test)
 
 
 [class_s1, closest] = classify_s1(10, U, training, test);

@@ -15,7 +15,7 @@ function [class_s1, closest_image] = classify_s1(k, U, training, test)
     imshow(closest_image, []);
     string = strcat('Closest image to s1 for k = ', num2str(k));
     title(string);
-    filename = strcat('closestk=', num2str(k), '.jpg');
+    filename = strcat('closestk=', num2str(k), '.png');
     saveas(gcf, filename);
 
 
